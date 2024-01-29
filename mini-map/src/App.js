@@ -1,40 +1,23 @@
-import React, {useState, useRef, useEffect} from 'react'; 
-import {select, line, curveCardinal} from "d3"; 
-import './App.css';
+import React, { useState, useEffect, useRef } from 'react';
+import * as BABYLON from 'babylonjs';
+import Scene from './components/Scene';
+import Map from './components/Map';
 
-function App() {
-  const [data, setData] = useState([25, 30, 45, 60, 20]); 
-  const svgRef = useRef(); 
+const App = () => {
+  const [carPosition, setCarPosition] = useState(null);
 
-  useEffect(() => {
-    const svg = select (svgRef.current);
-    const carPath = line()
-      .x((value, index) => index * 50)
-      .y(value => 150-value)
-      .curve(curveCardinal)
-    
-    svg
-      .selectAll("path")
-      .data([data])
-      .join("path")
-      .attr("d", value => carPath(value))
-      .attr("fill", "none")
-      .attr("stroke", "blue")
-    /*svg.selectAll("circle")
-    .data(data)
-    .join("circle")
-    .attr("r", value => 1)
-    .attr("cx", value => value *2)
-    .attr("cy", value => value *2)
-    .attr("stroke", "red");
-    */
-  }, [data]);
+  function handlePositionData(data) {
+    //console.log('Data received from child:', data);
+    setCarPosition(data);
+    //console.log(carPosition);
+  }
 
-  return (
-    <div className="">
-      <svg ref={svgRef}></svg>
+  return(
+    <div className="relative">
+      <Scene sendDataToParent={handlePositionData}/>
+      <Map></Map>
     </div>
   );
-}
+};
 
 export default App;
