@@ -40,12 +40,12 @@ const Scene = ({sendDataToParent}) => {
         scene);
 
     scene.onBeforeRenderTargetsRenderObservable.add(() => {
-        sphere.position.x += 0.01;
-        sphere.position.z += 0.01;
-        if (sphere.position.x >=5 &&  sphere.position.z >=5)
+        sphere.position.x += 0.1;
+        sphere.position.z += 0.1;
+        if (sphere.position.x >=40 &&  sphere.position.z >=40)
         {
-            sphere.position.x = -1;
-            sphere.position.z = -1;
+            sphere.position.x = 0;
+            sphere.position.z = 0;
         }
         setXPos((prevXPos) => sphere.position.x);
         setZPos((prevZPos) => sphere.position.z);
@@ -70,11 +70,13 @@ const Scene = ({sendDataToParent}) => {
 
   useEffect(() => {
     sendDataToParent([xPos, zPos]);
-    //console.log("Updated xPos:", xPos);
-    //console.log("Updated zPos:", zPos);
   }, [xPos, zPos]);
 
-  return <canvas ref={canvasRef} className="w-screen h-screen overflow-hidden"/>;
+  return (<div>
+    <canvas ref={canvasRef} className="w-screen h-screen overflow-hidden"/>
+   
+ </div>);
+  
 };
 
 export default Scene;
