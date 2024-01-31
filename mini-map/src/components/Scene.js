@@ -1,12 +1,51 @@
 import React, { useEffect, useState, useRef } from 'react';
 import * as BABYLON from 'babylonjs';
 
-const Scene = ({sendDataToParent}) => {
+const Scene = ({sendDataToParent, worldXBoundary, worldZBoundary}) => {
   const canvasRef = useRef(null);
   const [xPos, setXPos] = useState(0);
   const [zPos, setZPos] = useState(0);
 
+  const sphereSteps = 1; 
+  const maxXPos = worldXBoundary; 
+  const maxZPos = worldZBoundary; 
+  const resetXPos = 0; 
+  const resetZPos = 0; 
+  
+  
   useEffect(() => {
+    const handleKeyPress = (event) => {
+      switch (event.key) {
+        case 'ArrowUp':
+          sphere.position.z += sphereSteps;
+          break;
+        case 'ArrowDown':
+          sphere.position.z -= sphereSteps;
+          break;
+        case 'ArrowLeft':
+          sphere.position.x -= sphereSteps;
+          break;
+        case 'ArrowRight':
+          sphere.position.x += sphereSteps;
+          break;
+        default:
+          break;
+      }
+      // Check boundaries and reset if needed
+      if (sphere.position.x >= maxXPos) {
+        sphere.position.x = maxXPos;
+      } else if (sphere.position.x <= -maxXPos) {
+        sphere.position.x = -maxXPos;
+      }
+      if (sphere.position.z >= maxZPos) {
+        sphere.position.z = maxZPos;
+      } else if (sphere.position.z <= -maxZPos) {
+        sphere.position.z = -maxZPos;
+      }
+      setXPos(sphere.position.x);
+      setZPos(sphere.position.z);
+    };
+
     // Initialize Babylon scene
     const engine = new BABYLON.Engine(canvasRef.current, true);
     const scene = new BABYLON.Scene(engine);
@@ -39,17 +78,18 @@ const Scene = ({sendDataToParent}) => {
         {width: 6, height: 6}, 
         scene);
 
-    scene.onBeforeRenderTargetsRenderObservable.add(() => {
-        sphere.position.x += 0.1;
-        sphere.position.z += 0.1;
-        if (sphere.position.x >=40 &&  sphere.position.z >=40)
+    /*scene.onBeforeRenderTargetsRenderObservable.add(() => {
+        sphere.position.x += sphereSteps;
+        sphere.position.z += sphereSteps;
+        if (sphere.position.x >= maxXPos &&  sphere.position.z >= maxZPos)
         {
-            sphere.position.x = 0;
-            sphere.position.z = 0;
+            sphere.position.x = resetXPos;
+            sphere.position.z = resetZPos;
         }
         setXPos((prevXPos) => sphere.position.x);
         setZPos((prevZPos) => sphere.position.z);
-    });
+    });*/
+    window.addEventListener('keydown', handleKeyPress);
 
     engine.runRenderLoop(() => {
       if (scene) {
@@ -57,13 +97,9 @@ const Scene = ({sendDataToParent}) => {
       }
     });
 
-    // Handle window resize
-    window.addEventListener('resize', () => {
-      engine.resize();
-    });
-
     // Clean up
     return () => {
+      window.removeEventListener('keydown', handleKeyPress);
       engine.dispose();
     };
   }, []);
