@@ -5,13 +5,14 @@ import Map from './components/Map';
 
 const App = () => {
   const [carPosition, setCarPosition] = useState(null);
-  const worldXBoundary = 50; 
-  const worldZBoundary = 50; 
+  const worldPosXBound = 3;
+  const worldNegXBound = -2;
+  const worldPosZBound = 4;
+  const worldNegZBound = -10;
+  const fixedHeight = 10; 
   
   function handlePositionData(data) {
-    //console.log('Data received from child:', data);
     setCarPosition(data);
-    //console.log(carPosition);
   }
 
   return(
@@ -20,16 +21,21 @@ const App = () => {
         <Scene
           className="absolute z-10 w-auto min-w-full min-h-full max-w-none"
           sendDataToParent={handlePositionData}
-          worldXBoundary= {worldXBoundary}
-          worldZBoundary= {worldZBoundary}
+          worldPosXBound= {worldPosXBound}
+          worldNegXBound= {worldNegXBound}
+          worldPosZBound= {worldPosZBound}
+          worldNegZBound= {worldNegZBound}
         />
         <div className="absolute top-10 right-10 p-4">
           {/* Content of the box */}
           <Map
             carPosition={carPosition}
-            worldXBoundary= {worldXBoundary}
-            worldZBoundary= {worldZBoundary}
-            className="sticky top-0 right-0 z-20 w-1/4 h-1/4"
+            worldPosXBound= {worldPosXBound}
+            worldNegXBound= {worldNegXBound}
+            worldPosZBound= {worldPosZBound}
+            worldNegZBound= {worldNegZBound}
+            fixedHeight = {fixedHeight}
+            className="sticky top-0 right-0 z-20"
           />
         </div>
       </header>

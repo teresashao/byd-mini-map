@@ -1,14 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import * as BABYLON from 'babylonjs';
 
-const Scene = ({sendDataToParent, worldXBoundary, worldZBoundary}) => {
+const Scene = ({sendDataToParent, worldPosXBound, worldNegXBound, worldPosZBound, worldNegZBound}) => {
   const canvasRef = useRef(null);
   const [xPos, setXPos] = useState(0);
   const [zPos, setZPos] = useState(0);
 
   const sphereSteps = 1; 
-  const maxXPos = worldXBoundary; 
-  const maxZPos = worldZBoundary; 
   const resetXPos = 0; 
   const resetZPos = 0; 
   
@@ -32,15 +30,15 @@ const Scene = ({sendDataToParent, worldXBoundary, worldZBoundary}) => {
           break;
       }
       // Check boundaries and reset if needed
-      if (sphere.position.x >= maxXPos) {
-        sphere.position.x = maxXPos;
-      } else if (sphere.position.x <= -maxXPos) {
-        sphere.position.x = -maxXPos;
+      if (sphere.position.x >= worldPosXBound) {
+        sphere.position.x = worldPosXBound;
+      } else if (sphere.position.x <= worldNegXBound) {
+        sphere.position.x = worldNegXBound;
       }
-      if (sphere.position.z >= maxZPos) {
-        sphere.position.z = maxZPos;
-      } else if (sphere.position.z <= -maxZPos) {
-        sphere.position.z = -maxZPos;
+      if (sphere.position.z >= worldPosZBound) {
+        sphere.position.z = worldPosZBound;
+      } else if (sphere.position.z <= worldNegZBound) {
+        sphere.position.z = worldNegZBound;
       }
       setXPos(sphere.position.x);
       setZPos(sphere.position.z);
@@ -73,6 +71,12 @@ const Scene = ({sendDataToParent, worldXBoundary, worldZBoundary}) => {
 
     //set initial states 
     sphere.position.y=1; 
+
+    // Material for the sphere
+    const sphereMaterial = new BABYLON.StandardMaterial("sphereMaterial", scene);
+    sphereMaterial.diffuseColor = new BABYLON.Color3(1, 0.5, 0.5); // Adjust color as needed
+    sphere.material = sphereMaterial;
+   
     // Built-in 'ground' shape.
     const ground = BABYLON.MeshBuilder.CreateGround("ground", 
         {width: 6, height: 6}, 
