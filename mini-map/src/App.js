@@ -5,6 +5,8 @@ import Map from './components/Map';
 
 const App = () => {
   const [carPosition, setCarPosition] = useState(null);
+
+  //custom world and map specs
   const worldPosXBound = 3;
   const worldNegXBound = -2;
   const worldPosZBound = 4;
@@ -27,7 +29,6 @@ const App = () => {
           worldNegZBound= {worldNegZBound}
         />
         <div className="absolute top-10 right-10 p-4">
-          {/* Content of the box */}
           <Map
             carPosition={carPosition}
             worldPosXBound= {worldPosXBound}
@@ -35,7 +36,7 @@ const App = () => {
             worldPosZBound= {worldPosZBound}
             worldNegZBound= {worldNegZBound}
             fixedHeight = {fixedHeight}
-            className="sticky top-0 right-0 z-20"
+            className="sticky top-0 right-0 z-20" 
           />
         </div>
       </header>

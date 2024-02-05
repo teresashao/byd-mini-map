@@ -2,15 +2,17 @@ import { useState, useEffect } from 'react';
 
 const Map = ({carPosition, worldPosXBound, worldNegXBound, worldPosZBound, worldNegZBound, fixedHeight}) => {
     const [car, setCar] = useState([0,0]);
-    const [dotSize, setDotSize] = useState('10%');
+    const [dotSize, setDotSize] = useState('10%'); //can be used for englarging/shrinking/deleting the dot
 
-    const mapBoundarySize = 40; 
+    //calculations for map based on world coordinates
     const xSpan = Math.abs(worldPosXBound-worldNegXBound);
     const zSpan = Math.abs(worldPosZBound-worldNegZBound);
     const map_width = `${xSpan/zSpan *fixedHeight}rem`;
     const map_height = `${fixedHeight}rem`;
     const center_x = (Math.abs(worldNegXBound)/xSpan) *100; 
     const center_z = (Math.abs(worldNegZBound)/zSpan) *100
+    
+    //updates position of the dot
     useEffect(() => {
         if (carPosition)
         {
@@ -19,6 +21,7 @@ const Map = ({carPosition, worldPosXBound, worldNegXBound, worldPosZBound, world
         }
       }, [carPosition]);
 
+    //position styling for the dot
     const dotStyle = {
         position: 'absolute',
         transform: 'translate(-50%, 50%)',
@@ -27,6 +30,7 @@ const Map = ({carPosition, worldPosXBound, worldNegXBound, worldPosZBound, world
         maxHeight: dotSize, 
         maxWidth: dotSize 
     };
+
     const mapSize = {
         height: map_height, 
         width: map_width

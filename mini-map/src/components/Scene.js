@@ -82,7 +82,9 @@ const Scene = ({sendDataToParent, worldPosXBound, worldNegXBound, worldPosZBound
         {width: 6, height: 6}, 
         scene);
 
-    /*scene.onBeforeRenderTargetsRenderObservable.add(() => {
+    /* moving the sphere without arrow keys
+    
+    scene.onBeforeRenderTargetsRenderObservable.add(() => {
         sphere.position.x += sphereSteps;
         sphere.position.z += sphereSteps;
         if (sphere.position.x >= maxXPos &&  sphere.position.z >= maxZPos)
@@ -93,6 +95,7 @@ const Scene = ({sendDataToParent, worldPosXBound, worldNegXBound, worldPosZBound
         setXPos((prevXPos) => sphere.position.x);
         setZPos((prevZPos) => sphere.position.z);
     });*/
+    
     window.addEventListener('keydown', handleKeyPress);
 
     engine.runRenderLoop(() => {
