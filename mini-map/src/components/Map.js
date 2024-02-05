@@ -37,7 +37,8 @@ const Map = ({carPosition, worldPosXBound, worldNegXBound, worldPosZBound, world
     };
     return (
         <div className="relative bg-white items-center w-40 h-40 justify-center" style={mapSize}>
-            <p >{`x: ${car[0].toFixed(0)} z: ${car[1].toFixed(0)}`}</p>
+            <img src="/sample-map.png"></img>
+            <p className="text-white text-center rounded border mt-2 p-2">{`x: ${car[0].toFixed(0)} z: ${car[1].toFixed(0)}`}</p>
             <img style={dotStyle} src="/black-dot.png"></img>
         </div>
     );

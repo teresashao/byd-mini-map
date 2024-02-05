@@ -7,10 +7,10 @@ const App = () => {
   const [carPosition, setCarPosition] = useState(null);
 
   //custom world and map specs
-  const worldPosXBound = 3;
-  const worldNegXBound = -2;
-  const worldPosZBound = 4;
-  const worldNegZBound = -10;
+  const worldPosXBound = 50;
+  const worldNegXBound = -50;
+  const worldPosZBound = 50;
+  const worldNegZBound = -50;
   const fixedHeight = 10; 
   
   function handlePositionData(data) {
